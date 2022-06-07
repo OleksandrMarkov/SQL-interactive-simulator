@@ -705,3 +705,13 @@ FROM book INNER JOIN author USING (author_id)
 INNER JOIN supply USING (price);
 
 #############################################
+
+JOIN (homework)
+
+Вывести, сколько книг написано в каждом жанре и сколько экземпляров каждого жанра на складе.
+
+SELECT name_genre AS Жанр, COUNT(title) AS Книги, IF(SUM(amount) > 0, SUM(amount), 0) AS Экземпляры
+FROM genre LEFT JOIN book USING (genre_id)
+GROUP BY name_genre;
+
+#############################################
