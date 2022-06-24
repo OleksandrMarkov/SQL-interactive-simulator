@@ -840,3 +840,33 @@ DELETE FROM author
 USING author JOIN book USING(author_id)
              JOIN genre USING(genre_id)
 WHERE name_genre='Поэзия';
+
+#############################################
+
+Творческое задание на корректировку таблиц
+
+/*Уменьшить на 5 % цену книг Булгакова, на 3% цену книг Есенина (поиск выполнять по имени автора).
+Вывести название, жанр, цену и автора книги, отсортировав результат по убыванию цены.
+*/
+UPDATE book
+SET price = 0.95 * price
+WHERE author_id =
+(SELECT author_id
+FROM author
+WHERE name_author LIKE 'Булгаков%');
+
+UPDATE book
+SET price = 0.97 * price
+WHERE author_id =
+(SELECT author_id
+FROM author
+WHERE name_author LIKE 'Есенин%');
+
+SELECT title, name_genre AS genre, price, name_author AS author
+FROM book JOIN genre ON book.genre_id = genre.genre_id
+JOIN author USING(author_id)
+ORDER BY price DESC;
+
+#############################################
+
+
