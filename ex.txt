@@ -819,3 +819,24 @@ WHERE genre_id IN
     GROUP BY genre_id
     HAVING COUNT(title) < 4
 );
+
+#############################################
+
+Удаление записей, использование связанных таблиц
+
+Удалить всех авторов, которые пишут в жанре "Поэзия". Из таблицы book удалить все книги этих авторов. В запросе для отбора авторов использовать полное название жанра, а не его id.
+
+DELETE FROM author
+USING author
+INNER JOIN book ON
+author.author_id = book.author_id
+INNER JOIN genre ON
+book.genre_id = genre.genre_id
+WHERE name_genre = "Поэзия";
+
+or:
+
+DELETE FROM author 
+USING author JOIN book USING(author_id)
+             JOIN genre USING(genre_id)
+WHERE name_genre='Поэзия';
