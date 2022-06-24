@@ -928,3 +928,15 @@ INNER JOIN client USING (city_id)
 INNER JOIN buy USING (client_id)
 GROUP BY city_id
 ORDER BY Количество DESC, name_city;
+
+#############################################
+
+Запросы на основе трех и более связанных таблиц (4)
+
+Вывести номера всех оплаченных заказов и даты, когда они были оплачены (оплата: step = 1).
+
+SELECT buy_id, date_step_end
+FROM step RIGHT JOIN buy_step USING (step_id)
+WHERE date_step_end IS NOT NULL AND step_id = 1;
+
+#############################################
