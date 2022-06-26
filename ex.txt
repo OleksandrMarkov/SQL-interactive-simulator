@@ -981,3 +981,17 @@ WHERE name_step = 'Транспортировка' AND date_step_end IS NOT NULL
 ORDER BY buy_id;
 
 #############################################
+
+Запросы на основе трех и более связанных таблиц (8)
+
+Выбрать всех клиентов, которые заказывали книги Достоевского, информацию вывести в отсортированном по алфавиту виде. В решении используйте фамилию автора, а не его id.
+
+SELECT DISTINCT (name_client)
+FROM buy_book JOIN buy USING (buy_id)
+JOIN book USING (book_id)
+JOIN client USING (client_id)
+JOIN author USING (author_id)
+WHERE LOCATE('Достоевский', name_author) > 0 
+ORDER BY name_client;
+
+#############################################
