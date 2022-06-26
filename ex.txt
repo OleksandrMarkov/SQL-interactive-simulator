@@ -995,3 +995,32 @@ WHERE LOCATE('Достоевский', name_author) > 0
 ORDER BY name_client;
 
 #############################################
+
+Запросы на основе трех и более связанных таблиц (9)
+
+Вывести жанр (или жанры), в котором было заказано больше всего экземпляров книг, указать это количество. Последний столбец назвать Количество.
+
+SELECT name_genre, SUM(buy_book.amount) AS Количество
+FROM buy_book
+JOIN book USING (book_id)
+JOIN genre USING (genre_id)
+GROUP BY name_genre
+LIMIT 1;
+
+or: 
+
+SELECT name_genre, SUM(buy_book.amount) AS Количество
+FROM genre
+JOIN book USING (genre_id)
+JOIN buy_book USING (book_id)
+GROUP BY name_genre
+HAVING SUM(buy_book.amount) IN
+(SELECT MAX(Количество)
+FROM (SELECT name_genre, SUM(buy_book.amount) AS Количество
+      FROM genre 
+      JOIN book USING (genre_id) 
+      JOIN buy_book USING (book_id)
+      GROUP BY name_genre) query_in);
+
+
+#############################################
